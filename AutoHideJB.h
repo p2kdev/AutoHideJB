@@ -4,6 +4,7 @@
 #import "spawn.h"
 
 @interface SBApplicationProcessState
+    @property (nonatomic,readonly) int pid;     
     @property (nonatomic,readonly) long long taskState;
 @end
 

@@ -84,11 +84,11 @@ void unhideJBIfNecessary() {
 
       if (isProtectionEnabled) {
          appLockItem.localizedTitle = @"Stop Hiding JB";
-         imageName = @"lock.open";
+         imageName = @"eye.fill";
       }
       else {
          appLockItem.localizedTitle = @"Hide JB";
-         imageName = @"lock";
+         imageName = @"eye.slash.fill";
       }
 
       appLockItem.icon = [[%c(SBSApplicationShortcutCustomImageIcon) alloc] initWithImageData:UIImagePNGRepresentation([UIImage systemImageNamed:imageName]) dataType:0 isTemplate:1];
@@ -131,14 +131,18 @@ void unhideJBIfNecessary() {
             return %orig;
          }
          else {
-            //NSLog(@"KLPD processState %lld",app.processState.taskState);
-            hideJB();
-            if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sileo"]] || [[NSFileManager defaultManager] fileExistsAtPath:@"/var/jb"]) {
-               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            NSLog(@"KLPD pid %d processState %lld",app.processState.pid,app.processState.taskState);
+            if (app.processState.pid <= 0) {
+               hideJB();
+               if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sileo"]] || [[NSFileManager defaultManager] fileExistsAtPath:@"/var/jb"]) {
+                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                     return %orig;
+                  });
+               }
+               else            
                   return %orig;
-               });
             }
-            else            
+            else
                return %orig;
          }
       } 
