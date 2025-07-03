@@ -131,19 +131,19 @@ void unhideJBIfNecessary() {
             return %orig;
          }
          else {
-            NSLog(@"KLPD pid %d processState %lld",app.processState.pid,app.processState.taskState);
-            if (app.processState.pid <= 0) {
+            //NSLog(@"KLPD pid %d processState %lld",app.processState.pid,app.processState.taskState);
+            if (app.processState && app.processState.pid > 0)
+               return %orig;
+            else {
                hideJB();
                if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sileo"]] || [[NSFileManager defaultManager] fileExistsAtPath:@"/var/jb"]) {
                   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                      return %orig;
                   });
                }
-               else            
+               else
                   return %orig;
             }
-            else
-               return %orig;
          }
       } 
       else

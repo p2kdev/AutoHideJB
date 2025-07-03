@@ -1,6 +1,6 @@
 Package: com.p2kdev.autohidejb
 Name: AutoHideJB
-Version: 1.0
+Version: 1.1
 Architecture: iphoneos-arm
 Description: AutoHide JB for selected apps!
 Maintainer: P2KDev <p2kdev@gmail.com>
